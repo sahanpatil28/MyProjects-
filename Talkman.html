@@ -1,11 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Coding By CodingNepal - www.codingnepalweb.com -->
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JockTalk</title>
+  <meta charset="utf-8">
+    
+    <title>Chatbot in JavaScript | CodingNepal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0">
+    <script src="script.js" defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lets talk</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" rel="stylesheet">
+    <script src="script.js" defer></script>
+  <meta charset="utf-8">
+  <title>Chatbot in JavaScript | CodingNepal</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-.cartoon {
+  @media only screen and (max-width: 600px) {
+    /* Styles for screens up to 600px wide */
+    /* Adjust layout, font sizes, etc. */
+    /* Example: */
+    .chatbot {
+        width: 100%; /* Take full width of the screen */
+        right: 0;
+        bottom: 0;
+    }
+}
+
+    .cartoon {
   position: absolute;
   top: 55%;
   left: 50%;
@@ -56,8 +86,8 @@
 .cartoon {
   --skin: #fca; 
   --iris: #68a;
-  --hair: #fe8; #321;
-  --shirt: #eef4ff;
+  --hair: rgb(143, 133, 134); #321;
+  --shirt: #8face2;
   --line: rgba(80,0,0,0.15);
 }
 .face {
@@ -321,202 +351,401 @@
   clip-path: polygon(0% 40%, 40% 10%, 40% 0%, 60% 0%, 60% 10%, 100% 40%, 100% 100%, 0% 100%)
   
 }
-
-#chat-container {
+    /* Import Google font - Poppins */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+    body {
+      background: #E3F2FD;
+    }
+    .chatbot {
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      max-width: 400px;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      background-color: #f9f9f9;
+      right: 35px;
+      bottom: 90px;
+      width: 420px;
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1);
+      box-shadow: 0 0 128px 0 rgba(0, 0, 0, 0.1),
+                  0 32px 64px -48px rgba(0, 0, 0, 0.5);
+      transition: all 0.1s ease;
     }
-
-    #chat-log {
-      height: 200px;
+    .chatbot header {
+      padding: 16px 0;
+      position: relative;
+      text-align: center;
+      color: #fff;
+      background: #724ae8;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .chatbot header span {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      display: none;
+      cursor: pointer;
+      transform: translateY(-50%);
+    }
+    header h2 {
+      font-size: 1.4rem;
+    }
+    .chatbot .chatbox {
       overflow-y: auto;
-      margin-bottom: 10px;
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      background-color: #fff;
+      height: 510px;
+      padding: 30px 20px 100px;
     }
+    .chatbox .chat {
+      display: flex;
+      list-style: none;
+    }
+    .chatbox .outgoing {
+      margin: 20px 0;
+      justify-content: flex-end;
+    }
+    .chatbox .incoming span {
+      width: 32px;
+      height: 32px;
+      color: #fff;
+      cursor: default;
+      text-align: center;
+      line-height: 32px;
+      align-self: flex-end;
+      background: #724ae8;
+      border-radius: 4px;
+      margin: 0 10px 7px 0;
+    }
+    .chatbox .chat p {
+      white-space: pre-wrap;
+      padding: 12px 16px;
+      border-radius: 10px 10px 0 10px;
+      max-width: 75%;
+      color: #fff;
+      font-size: 0.95rem;
+      background: #724ae8;
+    }
+    .chatbox .incoming p {
+      border-radius: 10px 10px 10px 0;
+    }
+    .chatbox .chat p.error {
+      color: #721c24;
+      background: #f8d7da;
+    }
+    .chatbox .incoming p {
+      color: #000;
+      background: #f2f2f2;
+    }
+    .chatbot .chat-input {
+      display: flex;
+      gap: 5px;
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      background: #fff;
+      padding: 3px 20px;
+      border-top: 1px solid #ddd;
+    }
+    .chat-input textarea {
+      height: 55px;
+      width: 100%;
+      border: none;
+      outline: none;
+      resize: none;
+      max-height: 180px;
+      padding: 15px 15px 15px 0;
+      font-size: 0.95rem;
+    }
+    .chat-input span {
+      align-self: flex-end;
+      color: #724ae8;
+      cursor: pointer;
+      height: 55px;
+      display: flex;
+      align-items: center;
+      visibility: hidden;
+      font-size: 1.35rem;
+    }
+    .chat-input textarea:valid ~ span {
+      visibility: visible;
+    }
+   
+/* Define keyframes for mouth animation */
+@keyframes openClose {
+  0% {
+    height: 50px; /* Closed mouth */
+  }
+  50% {
+    height: 70px; /* Open mouth */
+  }
+  100% {
+    height: 50px; /* Closed mouth */
+  }
+}
 
-    .user-message {
-      margin-bottom: 5px;
-      text-align: right;
-    }
 
-    .bot-message {
-      margin-bottom: 5px;
-    }
-
-    #user-input {
-      width: calc(100% - 20px);
-      padding: 5px;
-      border: 1px solid #ddd;
-      border-radius: 3px;
-      background-color: #fff;
-    }
-    
-  </style>
+   </style>
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!-- Google Fonts Link For Icons -->
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google Fonts Link For Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,1,0" />
+  <script src="script.js" defer></script>
 </head>
- 
-
 <body>
-    <div class="cartoon">
-        <div class="shoulders"></div>
-        <div class="hair-back"></div>
-        <div class="neck"></div>
-        <div class="ear ha hb"></div>
-        <div class="ear ha hb"></div>
-        <div class="face">
-          <div class="cheek"></div>
-          <div class="nose"></div>
-          <div class="mouth"></div>
-          <div class="eye">
-            <div class="pupil"></div>
-            <div class="eye-bright"></div>
-          </div>
-          <div class="eye">
-            <div class="pupil"></div>
-            <div class="eye-bright"></div>
-          </div>
-          <div class="eyebrow"></div>
-          <div class="eyebrow"></div>
-        </div>
-        <div class="forehead"></div>
-        <div class="hair-front-1"></div>
-        <div class="hair-front-1"></div>
-        <div class="hair-front-2"></div>
-        <div class="hair-front-2"></div>
-        <div class="hair-front-3"></div>
-        <div class="hair-front-3"></div>
-        <div class="hair-bangs"></div>
-        <div class="shirt-neck"></div>
-        <div class="shirt-neck"></div>
+  <div class="cartoon">
+    <div class="shoulders"></div>
+    <div class="hair-back"></div>
+    <div class="neck"></div>
+    <div class="ear ha hb"></div>
+    <div class="ear ha hb"></div>
+    <div class="face">
+      <div class="cheek"></div>
+      <div class="nose"></div>
+      <div class="mouth">
+        <div class="teeth"></div>
+        <div class="top-lip"></div>
+        <div class="bottom-lip"></div>
       </div>
       
-      <div id="chat-container">
-        <div id="chat-log"></div>
-        <input type="text" id="user-input" placeholder="Type your message...">
+      
+      <div class="eye">
+        <div class="pupil"></div>
+        <div class="eye-bright"></div>
       </div>
-    
-      <script>
-        const chatLog = document.getElementById('chat-log');
-        const userInput = document.getElementById('user-input');
-        const mouth = document.querySelector('.mouth');
-        const synth = window.speechSynthesis;
-    
-        function appendMessage(message, sender) {
-          const messageElement = document.createElement('div');
-          messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-          messageElement.innerText = message;
-          chatLog.appendChild(messageElement);
+      <div class="eye">
+        <div class="pupil"></div>
+        <div class="eye-bright"></div>
+      </div>
+      <div class="eyebrow"></div>
+      <div class="eyebrow"></div>
+    </div>
+    <div class="forehead"></div>
+    <div class="hair-front-1"></div>
+    <div class="hair-front-1"></div>
+    <div class="hair-front-2"></div>
+    <div class="hair-front-2"></div>
+    <div class="hair-front-3"></div>
+    <div class="hair-front-3"></div>
+    <div class="hair-bangs"></div>
+    <div class="shirt-neck"></div>
+    <div class="shirt-neck"></div>
+  </div>
+  <div class="chatbot">
+    <header>
+      <h2>Chatbot</h2>
+      <span class="close-btn material-symbols-outlined">close</span>
+    </header>
+    <ul class="chatbox">
+      <li class="chat incoming">
+        <span class="material-symbols-outlined">smart_toy</span>
+        <p>Hi there <br>How can I help you today?</p>
+      </li>
+    </ul>
+    <div class="chat-input">
+      <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+      <span id="send-btn" class="material-symbols-rounded">send</span>
+    </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const closeBtn = document.querySelector(".close-btn");
+    const chatbox = document.querySelector(".chatbox");
+    const chatInput = document.querySelector(".chat-input textarea");
+    const sendChatBtn = document.querySelector(".chat-input span");
+    let userMessage = null; // Variable to store user's message
+    const API_KEY = "sk-proj-5vUXIGn97armeqyxJzYLT3BlbkFJdduWsVhkGMYwPH1Ez6uM"; // Paste your API key here
+    const inputInitHeight = chatInput.scrollHeight;
+
+    // Function to create a chat <li> element
+    const createChatLi = (message, className) => {
+        const chatLi = document.createElement("li");
+        chatLi.classList.add("chat", `${className}`);
+        let chatContent = className === "outgoing" ? `<p></p>` : `<span class="material-symbols-outlined">smart_toy</span><p></p>`;
+        chatLi.innerHTML = chatContent;
+        chatLi.querySelector("p").textContent = message;
+        return chatLi;
+    }
+
+    // Function to speak the response
+// Function to speak the response with synchronous mouth movement
+const speakResponse = (text) => {
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.lang = 'en-US'; // Set language to English (United States)
+    speech.volume = 1; // Set volume (0 to 1)
+    speech.rate = 1; // Set rate (0.1 to 10)
+    speech.pitch = 1; // Set pitch (0 to 2)
+
+    let words = text.split(' ');
+    let index = 0;
+
+    speech.onstart = () => {
+        // Start mouth animation when speech starts
+        triggerMouthAnimation(words[index]);
+    };
+
+    speech.onend = () => {
+        // Move to the next word when speech ends
+        index++;
+        if (index < words.length) {
+            triggerMouthAnimation(words[index]);
+        } else {
+            // End of speech, stop mouth animation
+            stopMouthAnimation();
         }
-    
-        function processUserInput(input) {
-          appendMessage(input, 'user');
-          lipSync(input);
-          // Generate response based on user input
-          const response = generateResponse(input.toLowerCase());
-          appendMessage(response, 'bot');
-          lipSync(response);
-          speak(response);
-        }
-    
-        function generateResponse(input) {
-          let response;
-          if (input.includes('hello') || input.includes('hi')) {
-            response = "Hi there! How can I help you?";
-          } else if (input.includes('about realmlabs')) {
-            response = "Realm Labs is a Bangalore-based company that specializes in creating virtual reality (VR) and augmented reality (AR) experiences. They have expertise in game development, mobile app development, 3D modeling and rendering, game design, web design, and more";
-          } else if (input.includes('what is your name?')) {
-            response = "My name is Jockson; everyone calls me 'Jock'.";
-          } else if (input.includes('thanks') || input.includes('thank you')) {
-            response = "You're welcome!";
-          } else {
-            response = "I'm sorry, I didn't understand that.";
-          }
-          return response;
-        }
-    
-        function lipSync(text) {
-          const words = text.split(' ');
-          let index = 0;
-    
-          const interval = setInterval(() => {
-            if (index >= words.length) {
-              clearInterval(interval);
-              return;
-            }
-    
-            // Open mouth
-            mouth.style.borderTopColor = 'transparent';
-    
-            // Close mouth after a short duration
-            setTimeout(() => {
-              mouth.style.borderTopColor = 'rgba(0,0,0,0.2)';
-            }, 200);
-    
+    };
+
+    window.speechSynthesis.speak(speech);
+};
+
+    // Function to initialize mouth animation
+    const initializeMouthAnimation = () => {
+        const mouthElement = document.querySelector(".mouth");
+        mouthElement.style.animation = "none"; // Set animation to none initially
+        mouthElement.offsetHeight; /* trigger reflow */
+        mouthElement.style.animation = null; // Reset animation
+    };
+
+    // Function to stop mouth animation
+    const stopMouthAnimation = () => {
+        const mouthElement = document.querySelector(".mouth");
+        mouthElement.style.animation = "none"; // Set animation to none
+    };
+
+    // Function to trigger mouth animation based on response content
+const triggerMouthAnimation = (responseText) => {
+    const mouthElement = document.querySelector(".mouth");
+    const words = responseText.split(" ");
+    let index = 0;
+
+    // Function to animate mouth for each word
+    const animateMouthForWord = () => {
+        if (index < words.length) {
+            const word = words[index];
+            // Calculate duration based on word length or other factors
+            const duration = word.length * 100; // Adjust duration as needed
+            mouthElement.style.animation = "openClose " + duration + "ms ease";
             index++;
-          }, 400); // Adjust timing based on animation speed
+            setTimeout(animateMouthForWord, duration);
+        } else {
+            // End of speech, stop mouth animation
+            mouthElement.style.animation = "none";
         }
-    
-        function speak(text) {
-          const utterance = new SpeechSynthesisUtterance(text);
-          utterance.lang = 'en-US';
-          synth.speak(utterance);
-        }
-    
-        userInput.addEventListener('keydown', (event) => {
-          if (event.key === 'Enter') {
-            const inputText = userInput.value.trim();
-            if (inputText !== '') {
-              processUserInput(inputText);
-              userInput.value = '';
-            }
-          }
-        });
-      </script>
-      <script>
-        const chatLog = document.getElementById('chat-log');
-        const userInput = document.getElementById('user-input');
-    
-        userInput.addEventListener('keydown', async (event) => {
-          if (event.key === 'Enter') {
-            const inputText = userInput.value.trim();
-            if (inputText !== '') {
-              appendMessage(inputText, 'user');
-              const response = await generateResponse(inputText);
-              appendMessage(response, 'bot');
-              userInput.value = '';
-            }
-          }
-        });
-    
-        async function generateResponse(input) {
-          // Call an API to get a response based on the user input
-          const response = await fetch('/api/generate-response', {
-            method: 'POST',
+    };
+
+    // Start mouth animation for each word
+    animateMouthForWord();
+};
+
+
+    // Function to generate a response from the chatbot API
+    const generateResponse = (chatElement) => {
+        const API_URL = "https://api.openai.com/v1/chat/completions";
+        const messageElement = chatElement.querySelector("p");
+
+        const requestOptions = {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json'
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_KEY}`
             },
-            body: JSON.stringify({ input })
-          });
-    
-          const responseData = await response.json();
-          return responseData.response;
+            body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [{ role: "user", content: userMessage }],
+            })
         }
-    
-        function appendMessage(message, sender) {
-          const messageElement = document.createElement('div');
-          messageElement.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
-          messageElement.innerText = message;
-          chatLog.appendChild(messageElement);
+
+        fetch(API_URL, requestOptions)
+            .then(res => res.json())
+            .then(data => {
+                const responseText = data.choices[0].message.content.trim();
+                messageElement.textContent = responseText;
+                speakResponse(responseText);
+                triggerMouthAnimation(responseText); // Trigger mouth animation based on response
+            })
+            .catch(() => {
+                messageElement.classList.add("error");
+                messageElement.textContent = "Oops! Something went wrong. Please try again.";
+            })
+            .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+    };
+
+    // Function to handle user input and initiate chat
+    const handleChat = () => {
+        userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+
+        chatInput.value = "";
+        chatInput.style.height = `${inputInitHeight}px`;
+
+        chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+        chatbox.scrollTo(0, chatbox.scrollHeight);
+
+        setTimeout(() => {
+            const incomingChatLi = createChatLi("Thinking...", "incoming");
+            chatbox.appendChild(incomingChatLi);
+            chatbox.scrollTo(0, chatbox.scrollHeight);
+            generateResponse(incomingChatLi);
+        }, 600);
+    }
+
+    // Initialize mouth animation
+    initializeMouthAnimation();
+
+    // Event listeners
+    chatInput.addEventListener("input", () => {
+        chatInput.style.height = `${inputInitHeight}px`;
+        chatInput.style.height = `${chatInput.scrollHeight}px`;
+    });
+
+    chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" && !e.shiftKey && window.innerWidth > 800) {
+            e.preventDefault();
+            handleChat();
         }
-      </script>
-    </body>
-    </html>
-    
+    });
+
+    sendChatBtn.addEventListener("click", handleChat);
+    closeBtn.addEventListener("click", () => document.body.classList.remove("show-chatbot"));
+});
+
+</script>
+
+ <script>
+        // Function to synchronize mouth animation with speech
+        function syncMouthAnimation(text) {
+            const mouthElement = document.querySelector('.mouth');
+            const words = text.split(' ');
+
+            // Calculate animation duration based on text length
+            const duration = words.length * 500; // 500ms per word (adjust as needed)
+
+            // Animate mouth with appropriate timing
+            mouthElement.style.animationDuration = duration + 'ms';
+            mouthElement.style.animationPlayState = 'running';
+
+            // Log words for demonstration (replace with mouth animation logic)
+            console.log(words);
+
+            // Simulate mouth animation (replace with actual animation code)
+            setTimeout(() => {
+                mouthElement.style.animationPlayState = 'paused'; // Pause animation when done
+            }, duration);
+        }
+
+        // Example chat input
+        const chatInput = "Hello there, how are you?";
+
+        // Call function to synchronize mouth animation with chat input
+        syncMouthAnimation(chatInput);
+    </script>
+</body>
+</html>
